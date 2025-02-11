@@ -1,4 +1,8 @@
-#morse code dictionary
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# Morse code dictionary
 morse_code_dict = {
     'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.',
     'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
@@ -10,19 +14,22 @@ morse_code_dict = {
     '7': '--...', '8': '---..', '9': '----.'
 }
 
-# function to convert text to Morse code
 def text_to_morse(text):
     morse_code = []
     for char in text.upper():
         if char in morse_code_dict:
             morse_code.append(morse_code_dict[char])
-    return ''.join(morse_code)
+    return ' '.join(morse_code)
 
-# Function to take input and convert to Morse code
-def convert_input_to_morse():
-    user_input = input("Enter text to convert to Morse code: ")
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('morse_code_convertor.html')
+
+@app.route('/convert', methods=['POST'])
+def convert():
+    user_input = request.form['textInput']
     morse_output = text_to_morse(user_input)
-    print("Morse code:", morse_output)
+    return render_template('morse_code_convertor.html', morse_code=morse_output)
 
-# Call the function
-convert_input_to_morse()
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <h1>Morse Code Converter</h1>
+    <form action="/convert" method="post">
+        <input type="text" name="textInput" placeholder="Enter text here..." required>
+        <button type="submit">Convert to Morse Code</button>
+    </form>
+
+    {% if morse_code %}
+        <div id="output">
+            <h2>Morse Code:</h2>
+            <p>{{ morse_code }}</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>
